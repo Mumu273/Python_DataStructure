@@ -11,9 +11,12 @@ separate_key_value = [key.strip() for key in city_map_keys]
 
 
 for key in separate_key_value:
-    city_map[key.split(":")[0].strip()] = key.split(":")[1].strip()
+    value_list = key.split(":")[1].strip()
+    # if "," in value_list:
+    value_list = value_list.split(",")
+    city_map[key.split(":")[0].strip()] = value_list
 
-print(city_map)
+# print(city_map)
 
 options = {
     1: "Find City",
@@ -38,15 +41,12 @@ if options.get(chosen_option):
         city_names = input("Enter city names(Separate city names using comma if you want to find the countries of multiple cities):\n").lower()
         city_names = city_names.split(",")
         city_names = [name.strip() for name in city_names]
-        print(city_names)
-        values_from_city_map = list(city_map.values())
+        # print(city_names)
 
-        print(values_from_city_map)
-        if city_names in values_from_city_map:
-            print([key for key, val in city_map.items() if val==city_names])
-            print("I want to see here")
-            # print(country + ":" + city_map.get(country))
-            print(city_names)
+        for key, value in city_map.items():
+            for item in city_names:
+                if item in value:
+                    print(f"{str(item)}: {key}\n")
 else:
     print("Please choose a valid option.\n")
 
